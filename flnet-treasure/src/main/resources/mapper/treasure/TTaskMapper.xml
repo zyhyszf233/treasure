@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flnet.treasure.mapper.TTaskMapper">
+    
+    <resultMap type="TTask" id="TTaskResult">
+        <result property="taskId"    column="task_id"    />
+        <result property="taskName"    column="task_name"    />
+        <result property="iconPath"    column="icon_path"    />
+        <result property="qrcodePath"    column="qrcode_path"    />
+        <result property="appId"    column="appId"    />
+        <result property="jumpMode"    column="jump_mode"    />
+        <result property="path"    column="path"    />
+        <result property="descr"    column="descr"    />
+        <result property="reward"    column="reward"    />
+        <result property="limitCount"    column="limit_count"    />
+        <result property="createTime"    column="createTime"    />
+        <result property="creator"    column="creator"    />
+        <result property="modifyTime"    column="modifyTime"    />
+        <result property="modifier"    column="modifier"    />
+        <result property="taskTime"    column="task_time"    />
+    </resultMap>
+	
+	<sql id="selectTTaskVo">
+        select task_id, task_name, icon_path, qrcode_path, appId, jump_mode, path, descr, reward, limit_count, createTime, creator, modifyTime, modifier, task_time from t_task
+    </sql>
+	
+    <select id="selectTTaskList" parameterType="TTask" resultMap="TTaskResult">
+        <include refid="selectTTaskVo"/>
+        <where>  
+            <if test="taskId != null "> and task_id = #{taskId}</if>
+             <if test="taskName != null  and taskName != '' "> and task_name = #{taskName}</if>
+             <if test="iconPath != null  and iconPath != '' "> and icon_path = #{iconPath}</if>
+             <if test="qrcodePath != null  and qrcodePath != '' "> and qrcode_path = #{qrcodePath}</if>
+             <if test="appId != null  and appId != '' "> and appId = #{appId}</if>
+             <if test="jumpMode != null  and jumpMode != '' "> and jump_mode = #{jumpMode}</if>
+             <if test="path != null  and path != '' "> and path = #{path}</if>
+             <if test="descr != null  and descr != '' "> and descr = #{descr}</if>
+             <if test="reward != null "> and reward = #{reward}</if>
+             <if test="limitCount != null "> and limit_count = #{limitCount}</if>
+             <if test="createTime != null "> and createTime = #{createTime}</if>
+             <if test="creator != null "> and creator = #{creator}</if>
+             <if test="modifyTime != null "> and modifyTime = #{modifyTime}</if>
+             <if test="modifier != null "> and modifier = #{modifier}</if>
+             <if test="taskTime != null "> and task_time = #{taskTime}</if>
+         </where>
+    </select>
+    
+    <select id="selectTTaskById" parameterType="Long" resultMap="TTaskResult">
+        <include refid="selectTTaskVo"/>
+        where task_id = #{taskId}
+    </select>
+        
+    <insert id="insertTTask" parameterType="TTask">
+        insert into t_task
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="taskId != null  ">task_id,</if>
+			<if test="taskName != null  and taskName != ''  ">task_name,</if>
+			<if test="iconPath != null  and iconPath != ''  ">icon_path,</if>
+			<if test="qrcodePath != null  and qrcodePath != ''  ">qrcode_path,</if>
+			<if test="appId != null  and appId != ''  ">appId,</if>
+			<if test="jumpMode != null  and jumpMode != ''  ">jump_mode,</if>
+			<if test="path != null  and path != ''  ">path,</if>
+			<if test="descr != null  and descr != ''  ">descr,</if>
+			<if test="reward != null  ">reward,</if>
+			<if test="limitCount != null  ">limit_count,</if>
+			<if test="createTime != null  ">createTime,</if>
+			<if test="creator != null  ">creator,</if>
+			<if test="modifyTime != null  ">modifyTime,</if>
+			<if test="modifier != null  ">modifier,</if>
+			<if test="taskTime != null  ">task_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="taskId != null  ">#{taskId},</if>
+			<if test="taskName != null  and taskName != ''  ">#{taskName},</if>
+			<if test="iconPath != null  and iconPath != ''  ">#{iconPath},</if>
+			<if test="qrcodePath != null  and qrcodePath != ''  ">#{qrcodePath},</if>
+			<if test="appId != null  and appId != ''  ">#{appId},</if>
+			<if test="jumpMode != null  and jumpMode != ''  ">#{jumpMode},</if>
+			<if test="path != null  and path != ''  ">#{path},</if>
+			<if test="descr != null  and descr != ''  ">#{descr},</if>
+			<if test="reward != null  ">#{reward},</if>
+			<if test="limitCount != null  ">#{limitCount},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="creator != null  ">#{creator},</if>
+			<if test="modifyTime != null  ">#{modifyTime},</if>
+			<if test="modifier != null  ">#{modifier},</if>
+			<if test="taskTime != null  ">#{taskTime},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateTTask" parameterType="TTask">
+        update t_task
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="taskName != null  and taskName != ''  ">task_name = #{taskName},</if>
+            <if test="iconPath != null  and iconPath != ''  ">icon_path = #{iconPath},</if>
+            <if test="qrcodePath != null  and qrcodePath != ''  ">qrcode_path = #{qrcodePath},</if>
+            <if test="appId != null  and appId != ''  ">appId = #{appId},</if>
+            <if test="jumpMode != null  and jumpMode != ''  ">jump_mode = #{jumpMode},</if>
+            <if test="path != null  and path != ''  ">path = #{path},</if>
+            <if test="descr != null  and descr != ''  ">descr = #{descr},</if>
+            <if test="reward != null  ">reward = #{reward},</if>
+            <if test="limitCount != null  ">limit_count = #{limitCount},</if>
+            <if test="createTime != null  ">createTime = #{createTime},</if>
+            <if test="creator != null  ">creator = #{creator},</if>
+            <if test="modifyTime != null  ">modifyTime = #{modifyTime},</if>
+            <if test="modifier != null  ">modifier = #{modifier},</if>
+            <if test="taskTime != null  ">task_time = #{taskTime},</if>
+        </trim>
+        where task_id = #{taskId}
+    </update>
+
+	<delete id="deleteTTaskById" parameterType="Long">
+        delete from t_task where task_id = #{taskId}
+    </delete>
+	
+    <delete id="deleteTTaskByIds" parameterType="String">
+        delete from t_task where task_id in 
+        <foreach item="taskId" collection="array" open="(" separator="," close=")">
+            #{taskId}
+        </foreach>
+    </delete>
+    
+</mapper>

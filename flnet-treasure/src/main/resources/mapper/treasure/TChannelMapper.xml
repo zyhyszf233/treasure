@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flnet.treasure.mapper.TChannelMapper">
+    
+    <resultMap type="TChannel" id="TChannelResult">
+        <result property="channelId"    column="channel_id"    />
+        <result property="createTime"    column="createTime"    />
+        <result property="creator"    column="creator"    />
+        <result property="modifyTime"    column="modifyTime"    />
+        <result property="modifier"    column="modifier"    />
+        <result property="name"    column="name"    />
+        <result property="appId"    column="appId"    />
+        <result property="iconPath"    column="icon_path"    />
+        <result property="qrcodePath"    column="qrcode_path"    />
+        <result property="pagePath"    column="page_path"    />
+        <result property="mePagePath"    column="me_page_path"    />
+        <result property="descr"    column="descr"    />
+        <result property="status"    column="status"    />
+    </resultMap>
+	
+	<sql id="selectTChannelVo">
+        select channel_id, createTime, creator, modifyTime, modifier, name, appId, icon_path, qrcode_path, page_path, me_page_path, descr, status from t_channel
+    </sql>
+	
+    <select id="selectTChannelList" parameterType="TChannel" resultMap="TChannelResult">
+        <include refid="selectTChannelVo"/>
+        <where>  
+            <if test="channelId != null "> and channel_id = #{channelId}</if>
+             <if test="createTime != null "> and createTime = #{createTime}</if>
+             <if test="creator != null "> and creator = #{creator}</if>
+             <if test="modifyTime != null "> and modifyTime = #{modifyTime}</if>
+             <if test="modifier != null "> and modifier = #{modifier}</if>
+             <if test="name != null  and name != '' "> and name = #{name}</if>
+             <if test="appId != null  and appId != '' "> and appId = #{appId}</if>
+             <if test="iconPath != null  and iconPath != '' "> and icon_path = #{iconPath}</if>
+             <if test="qrcodePath != null  and qrcodePath != '' "> and qrcode_path = #{qrcodePath}</if>
+             <if test="pagePath != null  and pagePath != '' "> and page_path = #{pagePath}</if>
+             <if test="mePagePath != null  and mePagePath != '' "> and me_page_path = #{mePagePath}</if>
+             <if test="descr != null  and descr != '' "> and descr = #{descr}</if>
+             <if test="status != null  and status != '' "> and status = #{status}</if>
+         </where>
+    </select>
+    
+    <select id="selectTChannelById" parameterType="Long" resultMap="TChannelResult">
+        <include refid="selectTChannelVo"/>
+        where channel_id = #{channelId}
+    </select>
+        
+    <insert id="insertTChannel" parameterType="TChannel">
+        insert into t_channel
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="channelId != null  ">channel_id,</if>
+			<if test="createTime != null  ">createTime,</if>
+			<if test="creator != null  ">creator,</if>
+			<if test="modifyTime != null  ">modifyTime,</if>
+			<if test="modifier != null  ">modifier,</if>
+			<if test="name != null  and name != ''  ">name,</if>
+			<if test="appId != null  and appId != ''  ">appId,</if>
+			<if test="iconPath != null  and iconPath != ''  ">icon_path,</if>
+			<if test="qrcodePath != null  and qrcodePath != ''  ">qrcode_path,</if>
+			<if test="pagePath != null  and pagePath != ''  ">page_path,</if>
+			<if test="mePagePath != null  and mePagePath != ''  ">me_page_path,</if>
+			<if test="descr != null  and descr != ''  ">descr,</if>
+			<if test="status != null  and status != ''  ">status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="channelId != null  ">#{channelId},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="creator != null  ">#{creator},</if>
+			<if test="modifyTime != null  ">#{modifyTime},</if>
+			<if test="modifier != null  ">#{modifier},</if>
+			<if test="name != null  and name != ''  ">#{name},</if>
+			<if test="appId != null  and appId != ''  ">#{appId},</if>
+			<if test="iconPath != null  and iconPath != ''  ">#{iconPath},</if>
+			<if test="qrcodePath != null  and qrcodePath != ''  ">#{qrcodePath},</if>
+			<if test="pagePath != null  and pagePath != ''  ">#{pagePath},</if>
+			<if test="mePagePath != null  and mePagePath != ''  ">#{mePagePath},</if>
+			<if test="descr != null  and descr != ''  ">#{descr},</if>
+			<if test="status != null  and status != ''  ">#{status},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateTChannel" parameterType="TChannel">
+        update t_channel
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="createTime != null  ">createTime = #{createTime},</if>
+            <if test="creator != null  ">creator = #{creator},</if>
+            <if test="modifyTime != null  ">modifyTime = #{modifyTime},</if>
+            <if test="modifier != null  ">modifier = #{modifier},</if>
+            <if test="name != null  and name != ''  ">name = #{name},</if>
+            <if test="appId != null  and appId != ''  ">appId = #{appId},</if>
+            <if test="iconPath != null  and iconPath != ''  ">icon_path = #{iconPath},</if>
+            <if test="qrcodePath != null  and qrcodePath != ''  ">qrcode_path = #{qrcodePath},</if>
+            <if test="pagePath != null  and pagePath != ''  ">page_path = #{pagePath},</if>
+            <if test="mePagePath != null  and mePagePath != ''  ">me_page_path = #{mePagePath},</if>
+            <if test="descr != null  and descr != ''  ">descr = #{descr},</if>
+            <if test="status != null  and status != ''  ">status = #{status},</if>
+        </trim>
+        where channel_id = #{channelId}
+    </update>
+
+	<delete id="deleteTChannelById" parameterType="Long">
+        delete from t_channel where channel_id = #{channelId}
+    </delete>
+	
+    <delete id="deleteTChannelByIds" parameterType="String">
+        delete from t_channel where channel_id in 
+        <foreach item="channelId" collection="array" open="(" separator="," close=")">
+            #{channelId}
+        </foreach>
+    </delete>
+    
+</mapper>

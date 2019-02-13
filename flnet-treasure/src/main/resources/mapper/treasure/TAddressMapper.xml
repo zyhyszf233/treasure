@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flnet.treasure.mapper.TAddressMapper">
+    
+    <resultMap type="TAddress" id="TAddressResult">
+        <result property="addressId"    column="address_id"    />
+        <result property="createTime"    column="createTime"    />
+        <result property="creator"    column="creator"    />
+        <result property="modifyTime"    column="modifyTime"    />
+        <result property="modifier"    column="modifier"    />
+        <result property="remark"    column="remark"    />
+        <result property="province"    column="province"    />
+        <result property="city"    column="city"    />
+        <result property="county"    column="county"    />
+        <result property="brief"    column="brief"    />
+        <result property="detail"    column="detail"    />
+        <result property="isdefault"    column="isdefault"    />
+        <result property="name"    column="name"    />
+        <result property="telephone"    column="telephone"    />
+        <result property="status"    column="status"    />
+        <result property="memberId"    column="member_id"    />
+    </resultMap>
+	
+	<sql id="selectTAddressVo">
+        select address_id, createTime, creator, modifyTime, modifier, remark, province, city, county, brief, detail, isdefault, name, telephone, status, member_id from t_address
+    </sql>
+	
+    <select id="selectTAddressList" parameterType="TAddress" resultMap="TAddressResult">
+        <include refid="selectTAddressVo"/>
+        <where>  
+            <if test="addressId != null "> and address_id = #{addressId}</if>
+             <if test="createTime != null "> and createTime = #{createTime}</if>
+             <if test="creator != null "> and creator = #{creator}</if>
+             <if test="modifyTime != null "> and modifyTime = #{modifyTime}</if>
+             <if test="modifier != null "> and modifier = #{modifier}</if>
+             <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
+             <if test="province != null  and province != '' "> and province = #{province}</if>
+             <if test="city != null  and city != '' "> and city = #{city}</if>
+             <if test="county != null  and county != '' "> and county = #{county}</if>
+             <if test="brief != null  and brief != '' "> and brief = #{brief}</if>
+             <if test="detail != null  and detail != '' "> and detail = #{detail}</if>
+             <if test="isdefault != null "> and isdefault = #{isdefault}</if>
+             <if test="name != null  and name != '' "> and name = #{name}</if>
+             <if test="telephone != null  and telephone != '' "> and telephone = #{telephone}</if>
+             <if test="status != null  and status != '' "> and status = #{status}</if>
+             <if test="memberId != null "> and member_id = #{memberId}</if>
+         </where>
+    </select>
+    
+    <select id="selectTAddressById" parameterType="Long" resultMap="TAddressResult">
+        <include refid="selectTAddressVo"/>
+        where address_id = #{addressId}
+    </select>
+        
+    <insert id="insertTAddress" parameterType="TAddress">
+        insert into t_address
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="addressId != null  ">address_id,</if>
+			<if test="createTime != null  ">createTime,</if>
+			<if test="creator != null  ">creator,</if>
+			<if test="modifyTime != null  ">modifyTime,</if>
+			<if test="modifier != null  ">modifier,</if>
+			<if test="remark != null  and remark != ''  ">remark,</if>
+			<if test="province != null  and province != ''  ">province,</if>
+			<if test="city != null  and city != ''  ">city,</if>
+			<if test="county != null  and county != ''  ">county,</if>
+			<if test="brief != null  and brief != ''  ">brief,</if>
+			<if test="detail != null  and detail != ''  ">detail,</if>
+			<if test="isdefault != null  ">isdefault,</if>
+			<if test="name != null  and name != ''  ">name,</if>
+			<if test="telephone != null  and telephone != ''  ">telephone,</if>
+			<if test="status != null  and status != ''  ">status,</if>
+			<if test="memberId != null  ">member_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="addressId != null  ">#{addressId},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="creator != null  ">#{creator},</if>
+			<if test="modifyTime != null  ">#{modifyTime},</if>
+			<if test="modifier != null  ">#{modifier},</if>
+			<if test="remark != null  and remark != ''  ">#{remark},</if>
+			<if test="province != null  and province != ''  ">#{province},</if>
+			<if test="city != null  and city != ''  ">#{city},</if>
+			<if test="county != null  and county != ''  ">#{county},</if>
+			<if test="brief != null  and brief != ''  ">#{brief},</if>
+			<if test="detail != null  and detail != ''  ">#{detail},</if>
+			<if test="isdefault != null  ">#{isdefault},</if>
+			<if test="name != null  and name != ''  ">#{name},</if>
+			<if test="telephone != null  and telephone != ''  ">#{telephone},</if>
+			<if test="status != null  and status != ''  ">#{status},</if>
+			<if test="memberId != null  ">#{memberId},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateTAddress" parameterType="TAddress">
+        update t_address
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="createTime != null  ">createTime = #{createTime},</if>
+            <if test="creator != null  ">creator = #{creator},</if>
+            <if test="modifyTime != null  ">modifyTime = #{modifyTime},</if>
+            <if test="modifier != null  ">modifier = #{modifier},</if>
+            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+            <if test="province != null  and province != ''  ">province = #{province},</if>
+            <if test="city != null  and city != ''  ">city = #{city},</if>
+            <if test="county != null  and county != ''  ">county = #{county},</if>
+            <if test="brief != null  and brief != ''  ">brief = #{brief},</if>
+            <if test="detail != null  and detail != ''  ">detail = #{detail},</if>
+            <if test="isdefault != null  ">isdefault = #{isdefault},</if>
+            <if test="name != null  and name != ''  ">name = #{name},</if>
+            <if test="telephone != null  and telephone != ''  ">telephone = #{telephone},</if>
+            <if test="status != null  and status != ''  ">status = #{status},</if>
+            <if test="memberId != null  ">member_id = #{memberId},</if>
+        </trim>
+        where address_id = #{addressId}
+    </update>
+
+	<delete id="deleteTAddressById" parameterType="Long">
+        delete from t_address where address_id = #{addressId}
+    </delete>
+	
+    <delete id="deleteTAddressByIds" parameterType="String">
+        delete from t_address where address_id in 
+        <foreach item="addressId" collection="array" open="(" separator="," close=")">
+            #{addressId}
+        </foreach>
+    </delete>
+    
+</mapper>

@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-tLevel-add">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">帐号状态（0正常 1停用）：</label>
+				<div class="col-sm-8">
+					<input id="status" name="status" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">等级名称：</label>
+				<div class="col-sm-8">
+					<input id="levelName" name="levelName" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">级别：</label>
+				<div class="col-sm-8">
+					<input id="levelGrade" name="levelGrade" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">钥匙上限数量：</label>
+				<div class="col-sm-8">
+					<input id="keyAmount" name="keyAmount" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">钥匙下限数量：</label>
+				<div class="col-sm-8">
+					<input id="keyLowAmount" name="keyLowAmount" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">碎片上限数量：</label>
+				<div class="col-sm-8">
+					<input id="debrisAmount" name="debrisAmount" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">碎片下限数量：</label>
+				<div class="col-sm-8">
+					<input id="debrisLowAmount" name="debrisLowAmount" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">金额奖励：</label>
+				<div class="col-sm-8">
+					<input id="awardMoney" name="awardMoney" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">商品奖励：</label>
+				<div class="col-sm-8">
+					<input id="awardGoodsId" name="awardGoodsId" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">：</label>
+				<div class="col-sm-8">
+					<input id="remark" name="remark" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+	</div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "treasure/tLevel"
+		$("#form-tLevel-add").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			}
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/add", $('#form-tLevel-add').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+    
+     <div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li>
+								：<input type="text" name="createTime"/>
+							</li>
+
+							<li>
+								：<input type="text" name="creator"/>
+							</li>
+
+							<li>
+								：<input type="text" name="modifyTime"/>
+							</li>
+
+							<li>
+								：<input type="text" name="modifier"/>
+							</li>
+
+							<li>
+								名称：<input type="text" name="name"/>
+							</li>
+
+							<li>
+								Appid：<input type="text" name="appId"/>
+							</li>
+
+							<li>
+								缩略图：<input type="text" name="iconPath"/>
+							</li>
+
+							<li>
+								二维码图：<input type="text" name="qrcodePath"/>
+							</li>
+
+							<li>
+								对方路径：<input type="text" name="pagePath"/>
+							</li>
+
+							<li>
+								我方路径：<input type="text" name="mePagePath"/>
+							</li>
+
+							<li>
+								描述：<input type="text" name="descr"/>
+							</li>
+
+							<li>
+								帐号状态（0正常 1停用）：<input type="text" name="status"/>
+							</li>
+
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			
+	        <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="treasure:tChannel:add">
+					<i class="fa fa-plus"></i> 添加
+				</a>
+				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="treasure:tChannel:edit">
+					<i class="fa fa-edit"></i> 修改
+				</a>
+				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="treasure:tChannel:remove">
+					<i class="fa fa-remove"></i> 删除
+				</a>
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="treasure:tChannel:export">
+						<i class="fa fa-download"></i> 导出
+				 </a>
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table" data-mobile-responsive="true"></table>
+			</div>
+		</div>
+	</div>
+    <div th:include="include :: footer"></div>
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('treasure:tChannel:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('treasure:tChannel:remove')}]];
+        var prefix = ctx + "treasure/tChannel";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+				exportUrl: prefix + "/export",
+                modalName: "渠道管理",
+				search: false,
+		        showExport: true,
+                columns: [{
+		            checkbox: true
+		        },
+				{
+					field : 'channelId', 
+					title : '',
+					visible: false
+				},
+				{
+					field : 'createTime', 
+					title : '',
+					sortable: true
+				},
+				{
+					field : 'creator', 
+					title : '',
+					sortable: true
+				},
+				{
+					field : 'modifyTime', 
+					title : '',
+					sortable: true
+				},
+				{
+					field : 'modifier', 
+					title : '',
+					sortable: true
+				},
+				{
+					field : 'name', 
+					title : '名称',
+					sortable: true
+				},
+				{
+					field : 'appId', 
+					title : 'Appid',
+					sortable: true
+				},
+				{
+					field : 'iconPath', 
+					title : '缩略图',
+					sortable: true
+				},
+				{
+					field : 'qrcodePath', 
+					title : '二维码图',
+					sortable: true
+				},
+				{
+					field : 'pagePath', 
+					title : '对方路径',
+					sortable: true
+				},
+				{
+					field : 'mePagePath', 
+					title : '我方路径',
+					sortable: true
+				},
+				{
+					field : 'descr', 
+					title : '描述',
+					sortable: true
+				},
+				{
+					field : 'status', 
+					title : '帐号状态（0正常 1停用）',
+					sortable: true
+				},
+		        {
+		            title: '操作',
+		            align: 'center',
+		            formatter: function(value, row, index) {
+		            	var actions = [];
+		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.channelId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.channelId + '\')"><i class="fa fa-remove"></i>删除</a>');
+						return actions.join('');
+		            }
+		        }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

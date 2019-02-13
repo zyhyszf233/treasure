@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flnet.treasure.mapper.TSigninMapper">
+    
+    <resultMap type="TSignin" id="TSigninResult">
+        <result property="tSigninId"    column="t_signin_id"    />
+        <result property="createTime"    column="createTime"    />
+        <result property="creator"    column="creator"    />
+        <result property="remark"    column="remark"    />
+        <result property="modifyTime"    column="modifyTime"    />
+        <result property="modifier"    column="modifier"    />
+    </resultMap>
+	
+	<sql id="selectTSigninVo">
+        select t_signin_id, createTime, creator, remark, modifyTime, modifier from t_signin
+    </sql>
+	
+    <select id="selectTSigninList" parameterType="TSignin" resultMap="TSigninResult">
+        <include refid="selectTSigninVo"/>
+        <where>  
+            <if test="tSigninId != null "> and t_signin_id = #{tSigninId}</if>
+             <if test="createTime != null "> and createTime = #{createTime}</if>
+             <if test="creator != null "> and creator = #{creator}</if>
+             <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
+             <if test="modifyTime != null "> and modifyTime = #{modifyTime}</if>
+             <if test="modifier != null "> and modifier = #{modifier}</if>
+         </where>
+    </select>
+    
+    <select id="selectTSigninById" parameterType="Long" resultMap="TSigninResult">
+        <include refid="selectTSigninVo"/>
+        where t_signin_id = #{tSigninId}
+    </select>
+        
+    <insert id="insertTSignin" parameterType="TSignin">
+        insert into t_signin
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="tSigninId != null  ">t_signin_id,</if>
+			<if test="createTime != null  ">createTime,</if>
+			<if test="creator != null  ">creator,</if>
+			<if test="remark != null  and remark != ''  ">remark,</if>
+			<if test="modifyTime != null  ">modifyTime,</if>
+			<if test="modifier != null  ">modifier,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="tSigninId != null  ">#{tSigninId},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="creator != null  ">#{creator},</if>
+			<if test="remark != null  and remark != ''  ">#{remark},</if>
+			<if test="modifyTime != null  ">#{modifyTime},</if>
+			<if test="modifier != null  ">#{modifier},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateTSignin" parameterType="TSignin">
+        update t_signin
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="createTime != null  ">createTime = #{createTime},</if>
+            <if test="creator != null  ">creator = #{creator},</if>
+            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+            <if test="modifyTime != null  ">modifyTime = #{modifyTime},</if>
+            <if test="modifier != null  ">modifier = #{modifier},</if>
+        </trim>
+        where t_signin_id = #{tSigninId}
+    </update>
+
+	<delete id="deleteTSigninById" parameterType="Long">
+        delete from t_signin where t_signin_id = #{tSigninId}
+    </delete>
+	
+    <delete id="deleteTSigninByIds" parameterType="String">
+        delete from t_signin where t_signin_id in 
+        <foreach item="tSigninId" collection="array" open="(" separator="," close=")">
+            #{tSigninId}
+        </foreach>
+    </delete>
+    
+</mapper>

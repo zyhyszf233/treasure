@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flnet.treasure.mapper.TMemberMapper">
+    
+    <resultMap type="TMember" id="TMemberResult">
+        <result property="memberId"    column="member_id"    />
+        <result property="loginCount"    column="login_count"    />
+        <result property="levelGrade"    column="levelGrade"    />
+        <result property="debrisQuantity"    column="debrisQuantity"    />
+        <result property="keyQuantity"    column="keyQuantity"    />
+        <result property="balance"    column="balance"    />
+        <result property="createTime"    column="createTime"    />
+        <result property="creator"    column="creator"    />
+        <result property="modifyTime"    column="modifyTime"    />
+        <result property="modifier"    column="modifier"    />
+        <result property="code"    column="code"    />
+        <result property="gender"    column="gender"    />
+        <result property="iconPath"    column="iconPath"    />
+        <result property="mobile"    column="mobile"    />
+        <result property="nickname"    column="nickname"    />
+        <result property="parentMemberId"    column="parent_member_id"    />
+        <result property="status"    column="status"    />
+        <result property="userId"    column="user_id"    />
+        <result property="address"    column="address"    />
+        <result property="weixin"    column="weixin"    />
+        <result property="openId"    column="openId"    />
+    </resultMap>
+	
+	<sql id="selectTMemberVo">
+        select member_id, login_count, levelGrade, debrisQuantity, keyQuantity, balance, createTime, creator, modifyTime, modifier, code, gender, iconPath, mobile, nickname, parent_member_id, status, user_id, address, weixin, openId from t_member
+    </sql>
+	
+    <select id="selectTMemberList" parameterType="TMember" resultMap="TMemberResult">
+        <include refid="selectTMemberVo"/>
+        <where>  
+            <if test="memberId != null "> and member_id = #{memberId}</if>
+             <if test="loginCount != null "> and login_count = #{loginCount}</if>
+             <if test="levelGrade != null "> and levelGrade = #{levelGrade}</if>
+             <if test="debrisQuantity != null "> and debrisQuantity = #{debrisQuantity}</if>
+             <if test="keyQuantity != null "> and keyQuantity = #{keyQuantity}</if>
+             <if test="balance != null "> and balance = #{balance}</if>
+             <if test="createTime != null "> and createTime = #{createTime}</if>
+             <if test="creator != null "> and creator = #{creator}</if>
+             <if test="modifyTime != null "> and modifyTime = #{modifyTime}</if>
+             <if test="modifier != null "> and modifier = #{modifier}</if>
+             <if test="code != null  and code != '' "> and code = #{code}</if>
+             <if test="gender != null  and gender != '' "> and gender = #{gender}</if>
+             <if test="iconPath != null  and iconPath != '' "> and iconPath = #{iconPath}</if>
+             <if test="mobile != null  and mobile != '' "> and mobile = #{mobile}</if>
+             <if test="nickname != null  and nickname != '' "> and nickname = #{nickname}</if>
+             <if test="parentMemberId != null "> and parent_member_id = #{parentMemberId}</if>
+             <if test="status != null  and status != '' "> and status = #{status}</if>
+             <if test="userId != null "> and user_id = #{userId}</if>
+             <if test="address != null  and address != '' "> and address = #{address}</if>
+             <if test="weixin != null  and weixin != '' "> and weixin = #{weixin}</if>
+             <if test="openId != null  and openId != '' "> and openId = #{openId}</if>
+         </where>
+    </select>
+    
+    <select id="selectTMemberById" parameterType="Long" resultMap="TMemberResult">
+        <include refid="selectTMemberVo"/>
+        where member_id = #{memberId}
+    </select>
+        
+    <insert id="insertTMember" parameterType="TMember">
+        insert into t_member
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="memberId != null  ">member_id,</if>
+			<if test="loginCount != null  ">login_count,</if>
+			<if test="levelGrade != null  ">levelGrade,</if>
+			<if test="debrisQuantity != null  ">debrisQuantity,</if>
+			<if test="keyQuantity != null  ">keyQuantity,</if>
+			<if test="balance != null  ">balance,</if>
+			<if test="createTime != null  ">createTime,</if>
+			<if test="creator != null  ">creator,</if>
+			<if test="modifyTime != null  ">modifyTime,</if>
+			<if test="modifier != null  ">modifier,</if>
+			<if test="code != null  and code != ''  ">code,</if>
+			<if test="gender != null  and gender != ''  ">gender,</if>
+			<if test="iconPath != null  and iconPath != ''  ">iconPath,</if>
+			<if test="mobile != null  and mobile != ''  ">mobile,</if>
+			<if test="nickname != null  and nickname != ''  ">nickname,</if>
+			<if test="parentMemberId != null  ">parent_member_id,</if>
+			<if test="status != null  and status != ''  ">status,</if>
+			<if test="userId != null  ">user_id,</if>
+			<if test="address != null  and address != ''  ">address,</if>
+			<if test="weixin != null  and weixin != ''  ">weixin,</if>
+			<if test="openId != null  and openId != ''  ">openId,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="memberId != null  ">#{memberId},</if>
+			<if test="loginCount != null  ">#{loginCount},</if>
+			<if test="levelGrade != null  ">#{levelGrade},</if>
+			<if test="debrisQuantity != null  ">#{debrisQuantity},</if>
+			<if test="keyQuantity != null  ">#{keyQuantity},</if>
+			<if test="balance != null  ">#{balance},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="creator != null  ">#{creator},</if>
+			<if test="modifyTime != null  ">#{modifyTime},</if>
+			<if test="modifier != null  ">#{modifier},</if>
+			<if test="code != null  and code != ''  ">#{code},</if>
+			<if test="gender != null  and gender != ''  ">#{gender},</if>
+			<if test="iconPath != null  and iconPath != ''  ">#{iconPath},</if>
+			<if test="mobile != null  and mobile != ''  ">#{mobile},</if>
+			<if test="nickname != null  and nickname != ''  ">#{nickname},</if>
+			<if test="parentMemberId != null  ">#{parentMemberId},</if>
+			<if test="status != null  and status != ''  ">#{status},</if>
+			<if test="userId != null  ">#{userId},</if>
+			<if test="address != null  and address != ''  ">#{address},</if>
+			<if test="weixin != null  and weixin != ''  ">#{weixin},</if>
+			<if test="openId != null  and openId != ''  ">#{openId},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateTMember" parameterType="TMember">
+        update t_member
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="loginCount != null  ">login_count = #{loginCount},</if>
+            <if test="levelGrade != null  ">levelGrade = #{levelGrade},</if>
+            <if test="debrisQuantity != null  ">debrisQuantity = #{debrisQuantity},</if>
+            <if test="keyQuantity != null  ">keyQuantity = #{keyQuantity},</if>
+            <if test="balance != null  ">balance = #{balance},</if>
+            <if test="createTime != null  ">createTime = #{createTime},</if>
+            <if test="creator != null  ">creator = #{creator},</if>
+            <if test="modifyTime != null  ">modifyTime = #{modifyTime},</if>
+            <if test="modifier != null  ">modifier = #{modifier},</if>
+            <if test="code != null  and code != ''  ">code = #{code},</if>
+            <if test="gender != null  and gender != ''  ">gender = #{gender},</if>
+            <if test="iconPath != null  and iconPath != ''  ">iconPath = #{iconPath},</if>
+            <if test="mobile != null  and mobile != ''  ">mobile = #{mobile},</if>
+            <if test="nickname != null  and nickname != ''  ">nickname = #{nickname},</if>
+            <if test="parentMemberId != null  ">parent_member_id = #{parentMemberId},</if>
+            <if test="status != null  and status != ''  ">status = #{status},</if>
+            <if test="userId != null  ">user_id = #{userId},</if>
+            <if test="address != null  and address != ''  ">address = #{address},</if>
+            <if test="weixin != null  and weixin != ''  ">weixin = #{weixin},</if>
+            <if test="openId != null  and openId != ''  ">openId = #{openId},</if>
+        </trim>
+        where member_id = #{memberId}
+    </update>
+
+	<delete id="deleteTMemberById" parameterType="Long">
+        delete from t_member where member_id = #{memberId}
+    </delete>
+	
+    <delete id="deleteTMemberByIds" parameterType="String">
+        delete from t_member where member_id in 
+        <foreach item="memberId" collection="array" open="(" separator="," close=")">
+            #{memberId}
+        </foreach>
+    </delete>
+    
+</mapper>

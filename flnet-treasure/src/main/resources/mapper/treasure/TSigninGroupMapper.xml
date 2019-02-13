@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flnet.treasure.mapper.TSigninGroupMapper">
+    
+    <resultMap type="TSigninGroup" id="TSigninGroupResult">
+        <result property="tSigninGroupId"    column="t_signin_group_id"    />
+        <result property="createTime"    column="createTime"    />
+        <result property="creator"    column="creator"    />
+        <result property="modifier"    column="modifier"    />
+        <result property="modifyTime"    column="modifyTime"    />
+        <result property="remark"    column="remark"    />
+        <result property="status"    column="status"    />
+        <result property="continueQuantity"    column="continueQuantity"    />
+        <result property="memberId"    column="member_id"    />
+    </resultMap>
+	
+	<sql id="selectTSigninGroupVo">
+        select t_signin_group_id, createTime, creator, modifier, modifyTime, remark, status, continueQuantity, member_id from t_signin_group
+    </sql>
+	
+    <select id="selectTSigninGroupList" parameterType="TSigninGroup" resultMap="TSigninGroupResult">
+        <include refid="selectTSigninGroupVo"/>
+        <where>  
+            <if test="tSigninGroupId != null "> and t_signin_group_id = #{tSigninGroupId}</if>
+             <if test="createTime != null "> and createTime = #{createTime}</if>
+             <if test="creator != null "> and creator = #{creator}</if>
+             <if test="modifier != null "> and modifier = #{modifier}</if>
+             <if test="modifyTime != null "> and modifyTime = #{modifyTime}</if>
+             <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
+             <if test="status != null  and status != '' "> and status = #{status}</if>
+             <if test="continueQuantity != null "> and continueQuantity = #{continueQuantity}</if>
+             <if test="memberId != null "> and member_id = #{memberId}</if>
+         </where>
+    </select>
+    
+    <select id="selectTSigninGroupById" parameterType="Long" resultMap="TSigninGroupResult">
+        <include refid="selectTSigninGroupVo"/>
+        where t_signin_group_id = #{tSigninGroupId}
+    </select>
+        
+    <insert id="insertTSigninGroup" parameterType="TSigninGroup">
+        insert into t_signin_group
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="tSigninGroupId != null  ">t_signin_group_id,</if>
+			<if test="createTime != null  ">createTime,</if>
+			<if test="creator != null  ">creator,</if>
+			<if test="modifier != null  ">modifier,</if>
+			<if test="modifyTime != null  ">modifyTime,</if>
+			<if test="remark != null  and remark != ''  ">remark,</if>
+			<if test="status != null  and status != ''  ">status,</if>
+			<if test="continueQuantity != null  ">continueQuantity,</if>
+			<if test="memberId != null  ">member_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="tSigninGroupId != null  ">#{tSigninGroupId},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="creator != null  ">#{creator},</if>
+			<if test="modifier != null  ">#{modifier},</if>
+			<if test="modifyTime != null  ">#{modifyTime},</if>
+			<if test="remark != null  and remark != ''  ">#{remark},</if>
+			<if test="status != null  and status != ''  ">#{status},</if>
+			<if test="continueQuantity != null  ">#{continueQuantity},</if>
+			<if test="memberId != null  ">#{memberId},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateTSigninGroup" parameterType="TSigninGroup">
+        update t_signin_group
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="createTime != null  ">createTime = #{createTime},</if>
+            <if test="creator != null  ">creator = #{creator},</if>
+            <if test="modifier != null  ">modifier = #{modifier},</if>
+            <if test="modifyTime != null  ">modifyTime = #{modifyTime},</if>
+            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+            <if test="status != null  and status != ''  ">status = #{status},</if>
+            <if test="continueQuantity != null  ">continueQuantity = #{continueQuantity},</if>
+            <if test="memberId != null  ">member_id = #{memberId},</if>
+        </trim>
+        where t_signin_group_id = #{tSigninGroupId}
+    </update>
+
+	<delete id="deleteTSigninGroupById" parameterType="Long">
+        delete from t_signin_group where t_signin_group_id = #{tSigninGroupId}
+    </delete>
+	
+    <delete id="deleteTSigninGroupByIds" parameterType="String">
+        delete from t_signin_group where t_signin_group_id in 
+        <foreach item="tSigninGroupId" collection="array" open="(" separator="," close=")">
+            #{tSigninGroupId}
+        </foreach>
+    </delete>
+    
+</mapper>

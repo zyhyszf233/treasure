@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flnet.treasure.mapper.TWithdrawLogMapper">
+    
+    <resultMap type="TWithdrawLog" id="TWithdrawLogResult">
+        <result property="withdrawLogId"    column="withdraw_log_id"    />
+        <result property="createTime"    column="createTime"    />
+        <result property="creator"    column="creator"    />
+        <result property="money"    column="money"    />
+        <result property="remark"    column="remark"    />
+        <result property="memberId"    column="member_id"    />
+    </resultMap>
+	
+	<sql id="selectTWithdrawLogVo">
+        select withdraw_log_id, createTime, creator, money, remark, member_id from t_withdraw_log
+    </sql>
+	
+    <select id="selectTWithdrawLogList" parameterType="TWithdrawLog" resultMap="TWithdrawLogResult">
+        <include refid="selectTWithdrawLogVo"/>
+        <where>  
+            <if test="withdrawLogId != null "> and withdraw_log_id = #{withdrawLogId}</if>
+             <if test="createTime != null "> and createTime = #{createTime}</if>
+             <if test="creator != null "> and creator = #{creator}</if>
+             <if test="money != null "> and money = #{money}</if>
+             <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
+             <if test="memberId != null "> and member_id = #{memberId}</if>
+         </where>
+    </select>
+    
+    <select id="selectTWithdrawLogById" parameterType="Long" resultMap="TWithdrawLogResult">
+        <include refid="selectTWithdrawLogVo"/>
+        where withdraw_log_id = #{withdrawLogId}
+    </select>
+        
+    <insert id="insertTWithdrawLog" parameterType="TWithdrawLog">
+        insert into t_withdraw_log
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="withdrawLogId != null  ">withdraw_log_id,</if>
+			<if test="createTime != null  ">createTime,</if>
+			<if test="creator != null  ">creator,</if>
+			<if test="money != null  ">money,</if>
+			<if test="remark != null  and remark != ''  ">remark,</if>
+			<if test="memberId != null  ">member_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="withdrawLogId != null  ">#{withdrawLogId},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="creator != null  ">#{creator},</if>
+			<if test="money != null  ">#{money},</if>
+			<if test="remark != null  and remark != ''  ">#{remark},</if>
+			<if test="memberId != null  ">#{memberId},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateTWithdrawLog" parameterType="TWithdrawLog">
+        update t_withdraw_log
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="createTime != null  ">createTime = #{createTime},</if>
+            <if test="creator != null  ">creator = #{creator},</if>
+            <if test="money != null  ">money = #{money},</if>
+            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+            <if test="memberId != null  ">member_id = #{memberId},</if>
+        </trim>
+        where withdraw_log_id = #{withdrawLogId}
+    </update>
+
+	<delete id="deleteTWithdrawLogById" parameterType="Long">
+        delete from t_withdraw_log where withdraw_log_id = #{withdrawLogId}
+    </delete>
+	
+    <delete id="deleteTWithdrawLogByIds" parameterType="String">
+        delete from t_withdraw_log where withdraw_log_id in 
+        <foreach item="withdrawLogId" collection="array" open="(" separator="," close=")">
+            #{withdrawLogId}
+        </foreach>
+    </delete>
+    
+</mapper>

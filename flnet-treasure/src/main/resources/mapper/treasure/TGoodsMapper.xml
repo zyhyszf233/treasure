@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flnet.treasure.mapper.TGoodsMapper">
+    
+    <resultMap type="TGoods" id="TGoodsResult">
+        <result property="goodsId"    column="goods_id"    />
+        <result property="name"    column="name"    />
+        <result property="title"    column="title"    />
+        <result property="goodsCode"    column="goods_code"    />
+        <result property="iconPath"    column="iconPath"    />
+        <result property="price"    column="price"    />
+        <result property="exchangePrice"    column="exchange_price"    />
+        <result property="coin"    column="coin"    />
+        <result property="limitateBuy"    column="limitate_buy"    />
+        <result property="stock"    column="stock"    />
+        <result property="sold"    column="sold"    />
+        <result property="status"    column="status"    />
+        <result property="createTime"    column="createTime"    />
+        <result property="creator"    column="creator"    />
+        <result property="modifyTime"    column="modifyTime"    />
+        <result property="modifier"    column="modifier"    />
+        <result property="categoryId"    column="category_id"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+	
+	<sql id="selectTGoodsVo">
+        select goods_id, name, title, goods_code, iconPath, price, exchange_price, coin, limitate_buy, stock, sold, status, createTime, creator, modifyTime, modifier, category_id, remark from t_goods
+    </sql>
+	
+    <select id="selectTGoodsList" parameterType="TGoods" resultMap="TGoodsResult">
+        <include refid="selectTGoodsVo"/>
+        <where>  
+            <if test="goodsId != null "> and goods_id = #{goodsId}</if>
+             <if test="name != null  and name != '' "> and name = #{name}</if>
+             <if test="title != null  and title != '' "> and title = #{title}</if>
+             <if test="goodsCode != null  and goodsCode != '' "> and goods_code = #{goodsCode}</if>
+             <if test="iconPath != null  and iconPath != '' "> and iconPath = #{iconPath}</if>
+             <if test="price != null "> and price = #{price}</if>
+             <if test="exchangePrice != null "> and exchange_price = #{exchangePrice}</if>
+             <if test="coin != null "> and coin = #{coin}</if>
+             <if test="limitateBuy != null "> and limitate_buy = #{limitateBuy}</if>
+             <if test="stock != null "> and stock = #{stock}</if>
+             <if test="sold != null "> and sold = #{sold}</if>
+             <if test="status != null  and status != '' "> and status = #{status}</if>
+             <if test="createTime != null "> and createTime = #{createTime}</if>
+             <if test="creator != null "> and creator = #{creator}</if>
+             <if test="modifyTime != null "> and modifyTime = #{modifyTime}</if>
+             <if test="modifier != null "> and modifier = #{modifier}</if>
+             <if test="categoryId != null "> and category_id = #{categoryId}</if>
+             <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
+         </where>
+    </select>
+    
+    <select id="selectTGoodsById" parameterType="Long" resultMap="TGoodsResult">
+        <include refid="selectTGoodsVo"/>
+        where goods_id = #{goodsId}
+    </select>
+        
+    <insert id="insertTGoods" parameterType="TGoods">
+        insert into t_goods
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="goodsId != null  ">goods_id,</if>
+			<if test="name != null  and name != ''  ">name,</if>
+			<if test="title != null  and title != ''  ">title,</if>
+			<if test="goodsCode != null  and goodsCode != ''  ">goods_code,</if>
+			<if test="iconPath != null  and iconPath != ''  ">iconPath,</if>
+			<if test="price != null  ">price,</if>
+			<if test="exchangePrice != null  ">exchange_price,</if>
+			<if test="coin != null  ">coin,</if>
+			<if test="limitateBuy != null  ">limitate_buy,</if>
+			<if test="stock != null  ">stock,</if>
+			<if test="sold != null  ">sold,</if>
+			<if test="status != null  and status != ''  ">status,</if>
+			<if test="createTime != null  ">createTime,</if>
+			<if test="creator != null  ">creator,</if>
+			<if test="modifyTime != null  ">modifyTime,</if>
+			<if test="modifier != null  ">modifier,</if>
+			<if test="categoryId != null  ">category_id,</if>
+			<if test="remark != null  and remark != ''  ">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="goodsId != null  ">#{goodsId},</if>
+			<if test="name != null  and name != ''  ">#{name},</if>
+			<if test="title != null  and title != ''  ">#{title},</if>
+			<if test="goodsCode != null  and goodsCode != ''  ">#{goodsCode},</if>
+			<if test="iconPath != null  and iconPath != ''  ">#{iconPath},</if>
+			<if test="price != null  ">#{price},</if>
+			<if test="exchangePrice != null  ">#{exchangePrice},</if>
+			<if test="coin != null  ">#{coin},</if>
+			<if test="limitateBuy != null  ">#{limitateBuy},</if>
+			<if test="stock != null  ">#{stock},</if>
+			<if test="sold != null  ">#{sold},</if>
+			<if test="status != null  and status != ''  ">#{status},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="creator != null  ">#{creator},</if>
+			<if test="modifyTime != null  ">#{modifyTime},</if>
+			<if test="modifier != null  ">#{modifier},</if>
+			<if test="categoryId != null  ">#{categoryId},</if>
+			<if test="remark != null  and remark != ''  ">#{remark},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateTGoods" parameterType="TGoods">
+        update t_goods
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null  and name != ''  ">name = #{name},</if>
+            <if test="title != null  and title != ''  ">title = #{title},</if>
+            <if test="goodsCode != null  and goodsCode != ''  ">goods_code = #{goodsCode},</if>
+            <if test="iconPath != null  and iconPath != ''  ">iconPath = #{iconPath},</if>
+            <if test="price != null  ">price = #{price},</if>
+            <if test="exchangePrice != null  ">exchange_price = #{exchangePrice},</if>
+            <if test="coin != null  ">coin = #{coin},</if>
+            <if test="limitateBuy != null  ">limitate_buy = #{limitateBuy},</if>
+            <if test="stock != null  ">stock = #{stock},</if>
+            <if test="sold != null  ">sold = #{sold},</if>
+            <if test="status != null  and status != ''  ">status = #{status},</if>
+            <if test="createTime != null  ">createTime = #{createTime},</if>
+            <if test="creator != null  ">creator = #{creator},</if>
+            <if test="modifyTime != null  ">modifyTime = #{modifyTime},</if>
+            <if test="modifier != null  ">modifier = #{modifier},</if>
+            <if test="categoryId != null  ">category_id = #{categoryId},</if>
+            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+        </trim>
+        where goods_id = #{goodsId}
+    </update>
+
+	<delete id="deleteTGoodsById" parameterType="Long">
+        delete from t_goods where goods_id = #{goodsId}
+    </delete>
+	
+    <delete id="deleteTGoodsByIds" parameterType="String">
+        delete from t_goods where goods_id in 
+        <foreach item="goodsId" collection="array" open="(" separator="," close=")">
+            #{goodsId}
+        </foreach>
+    </delete>
+    
+</mapper>

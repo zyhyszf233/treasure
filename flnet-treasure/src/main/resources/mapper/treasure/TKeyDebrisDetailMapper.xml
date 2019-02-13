@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flnet.treasure.mapper.TKeyDebrisDetailMapper">
+    
+    <resultMap type="TKeyDebrisDetail" id="TKeyDebrisDetailResult">
+        <result property="keyDebrisDetailId"    column="key_debris_detail_id"    />
+        <result property="createTime"    column="createTime"    />
+        <result property="creator"    column="creator"    />
+        <result property="modifyTime"    column="modifyTime"    />
+        <result property="modifier"    column="modifier"    />
+        <result property="remark"    column="remark"    />
+        <result property="tradeQuantity"    column="tradeQuantity"    />
+        <result property="remainder"    column="remainder"    />
+        <result property="type"    column="type"    />
+        <result property="memberId"    column="member_id"    />
+    </resultMap>
+	
+	<sql id="selectTKeyDebrisDetailVo">
+        select key_debris_detail_id, createTime, creator, modifyTime, modifier, remark, tradeQuantity, remainder, type, member_id from t_key_debris_detail
+    </sql>
+	
+    <select id="selectTKeyDebrisDetailList" parameterType="TKeyDebrisDetail" resultMap="TKeyDebrisDetailResult">
+        <include refid="selectTKeyDebrisDetailVo"/>
+        <where>  
+            <if test="keyDebrisDetailId != null "> and key_debris_detail_id = #{keyDebrisDetailId}</if>
+             <if test="createTime != null "> and createTime = #{createTime}</if>
+             <if test="creator != null "> and creator = #{creator}</if>
+             <if test="modifyTime != null "> and modifyTime = #{modifyTime}</if>
+             <if test="modifier != null "> and modifier = #{modifier}</if>
+             <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
+             <if test="tradeQuantity != null "> and tradeQuantity = #{tradeQuantity}</if>
+             <if test="remainder != null "> and remainder = #{remainder}</if>
+             <if test="type != null  and type != '' "> and type = #{type}</if>
+             <if test="memberId != null "> and member_id = #{memberId}</if>
+         </where>
+    </select>
+    
+    <select id="selectTKeyDebrisDetailById" parameterType="Long" resultMap="TKeyDebrisDetailResult">
+        <include refid="selectTKeyDebrisDetailVo"/>
+        where key_debris_detail_id = #{keyDebrisDetailId}
+    </select>
+        
+    <insert id="insertTKeyDebrisDetail" parameterType="TKeyDebrisDetail">
+        insert into t_key_debris_detail
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="keyDebrisDetailId != null  ">key_debris_detail_id,</if>
+			<if test="createTime != null  ">createTime,</if>
+			<if test="creator != null  ">creator,</if>
+			<if test="modifyTime != null  ">modifyTime,</if>
+			<if test="modifier != null  ">modifier,</if>
+			<if test="remark != null  and remark != ''  ">remark,</if>
+			<if test="tradeQuantity != null  ">tradeQuantity,</if>
+			<if test="remainder != null  ">remainder,</if>
+			<if test="type != null  and type != ''  ">type,</if>
+			<if test="memberId != null  ">member_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="keyDebrisDetailId != null  ">#{keyDebrisDetailId},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="creator != null  ">#{creator},</if>
+			<if test="modifyTime != null  ">#{modifyTime},</if>
+			<if test="modifier != null  ">#{modifier},</if>
+			<if test="remark != null  and remark != ''  ">#{remark},</if>
+			<if test="tradeQuantity != null  ">#{tradeQuantity},</if>
+			<if test="remainder != null  ">#{remainder},</if>
+			<if test="type != null  and type != ''  ">#{type},</if>
+			<if test="memberId != null  ">#{memberId},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateTKeyDebrisDetail" parameterType="TKeyDebrisDetail">
+        update t_key_debris_detail
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="createTime != null  ">createTime = #{createTime},</if>
+            <if test="creator != null  ">creator = #{creator},</if>
+            <if test="modifyTime != null  ">modifyTime = #{modifyTime},</if>
+            <if test="modifier != null  ">modifier = #{modifier},</if>
+            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+            <if test="tradeQuantity != null  ">tradeQuantity = #{tradeQuantity},</if>
+            <if test="remainder != null  ">remainder = #{remainder},</if>
+            <if test="type != null  and type != ''  ">type = #{type},</if>
+            <if test="memberId != null  ">member_id = #{memberId},</if>
+        </trim>
+        where key_debris_detail_id = #{keyDebrisDetailId}
+    </update>
+
+	<delete id="deleteTKeyDebrisDetailById" parameterType="Long">
+        delete from t_key_debris_detail where key_debris_detail_id = #{keyDebrisDetailId}
+    </delete>
+	
+    <delete id="deleteTKeyDebrisDetailByIds" parameterType="String">
+        delete from t_key_debris_detail where key_debris_detail_id in 
+        <foreach item="keyDebrisDetailId" collection="array" open="(" separator="," close=")">
+            #{keyDebrisDetailId}
+        </foreach>
+    </delete>
+    
+</mapper>

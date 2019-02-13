@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flnet.treasure.mapper.TLevelMapper">
+    
+    <resultMap type="TLevel" id="TLevelResult">
+        <result property="levelId"    column="level_id"    />
+        <result property="status"    column="status"    />
+        <result property="levelName"    column="levelName"    />
+        <result property="levelGrade"    column="levelGrade"    />
+        <result property="keyAmount"    column="keyAmount"    />
+        <result property="keyLowAmount"    column="keyLowAmount"    />
+        <result property="debrisAmount"    column="debrisAmount"    />
+        <result property="debrisLowAmount"    column="debrisLowAmount"    />
+        <result property="awardMoney"    column="awardMoney"    />
+        <result property="awardGoodsId"    column="awardGoodsId"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+	
+	<sql id="selectTLevelVo">
+        select level_id, status, levelName, levelGrade, keyAmount, keyLowAmount, debrisAmount, debrisLowAmount, awardMoney, awardGoodsId, remark from t_level
+    </sql>
+	
+    <select id="selectTLevelList" parameterType="TLevel" resultMap="TLevelResult">
+        <include refid="selectTLevelVo"/>
+        <where>  
+            <if test="levelId != null "> and level_id = #{levelId}</if>
+             <if test="status != null  and status != '' "> and status = #{status}</if>
+             <if test="levelName != null  and levelName != '' "> and levelName = #{levelName}</if>
+             <if test="levelGrade != null "> and levelGrade = #{levelGrade}</if>
+             <if test="keyAmount != null "> and keyAmount = #{keyAmount}</if>
+             <if test="keyLowAmount != null "> and keyLowAmount = #{keyLowAmount}</if>
+             <if test="debrisAmount != null "> and debrisAmount = #{debrisAmount}</if>
+             <if test="debrisLowAmount != null "> and debrisLowAmount = #{debrisLowAmount}</if>
+             <if test="awardMoney != null "> and awardMoney = #{awardMoney}</if>
+             <if test="awardGoodsId != null "> and awardGoodsId = #{awardGoodsId}</if>
+             <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
+         </where>
+    </select>
+    
+    <select id="selectTLevelById" parameterType="Long" resultMap="TLevelResult">
+        <include refid="selectTLevelVo"/>
+        where level_id = #{levelId}
+    </select>
+        
+    <insert id="insertTLevel" parameterType="TLevel">
+        insert into t_level
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="levelId != null  ">level_id,</if>
+			<if test="status != null  and status != ''  ">status,</if>
+			<if test="levelName != null  and levelName != ''  ">levelName,</if>
+			<if test="levelGrade != null  ">levelGrade,</if>
+			<if test="keyAmount != null  ">keyAmount,</if>
+			<if test="keyLowAmount != null  ">keyLowAmount,</if>
+			<if test="debrisAmount != null  ">debrisAmount,</if>
+			<if test="debrisLowAmount != null  ">debrisLowAmount,</if>
+			<if test="awardMoney != null  ">awardMoney,</if>
+			<if test="awardGoodsId != null  ">awardGoodsId,</if>
+			<if test="remark != null  and remark != ''  ">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="levelId != null  ">#{levelId},</if>
+			<if test="status != null  and status != ''  ">#{status},</if>
+			<if test="levelName != null  and levelName != ''  ">#{levelName},</if>
+			<if test="levelGrade != null  ">#{levelGrade},</if>
+			<if test="keyAmount != null  ">#{keyAmount},</if>
+			<if test="keyLowAmount != null  ">#{keyLowAmount},</if>
+			<if test="debrisAmount != null  ">#{debrisAmount},</if>
+			<if test="debrisLowAmount != null  ">#{debrisLowAmount},</if>
+			<if test="awardMoney != null  ">#{awardMoney},</if>
+			<if test="awardGoodsId != null  ">#{awardGoodsId},</if>
+			<if test="remark != null  and remark != ''  ">#{remark},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateTLevel" parameterType="TLevel">
+        update t_level
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="status != null  and status != ''  ">status = #{status},</if>
+            <if test="levelName != null  and levelName != ''  ">levelName = #{levelName},</if>
+            <if test="levelGrade != null  ">levelGrade = #{levelGrade},</if>
+            <if test="keyAmount != null  ">keyAmount = #{keyAmount},</if>
+            <if test="keyLowAmount != null  ">keyLowAmount = #{keyLowAmount},</if>
+            <if test="debrisAmount != null  ">debrisAmount = #{debrisAmount},</if>
+            <if test="debrisLowAmount != null  ">debrisLowAmount = #{debrisLowAmount},</if>
+            <if test="awardMoney != null  ">awardMoney = #{awardMoney},</if>
+            <if test="awardGoodsId != null  ">awardGoodsId = #{awardGoodsId},</if>
+            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+        </trim>
+        where level_id = #{levelId}
+    </update>
+
+	<delete id="deleteTLevelById" parameterType="Long">
+        delete from t_level where level_id = #{levelId}
+    </delete>
+	
+    <delete id="deleteTLevelByIds" parameterType="String">
+        delete from t_level where level_id in 
+        <foreach item="levelId" collection="array" open="(" separator="," close=")">
+            #{levelId}
+        </foreach>
+    </delete>
+    
+</mapper>

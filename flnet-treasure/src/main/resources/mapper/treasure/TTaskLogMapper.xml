@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flnet.treasure.mapper.TTaskLogMapper">
+    
+    <resultMap type="TTaskLog" id="TTaskLogResult">
+        <result property="taskLogId"    column="task_log_id"    />
+        <result property="memberId"    column="member_id"    />
+        <result property="taskId"    column="task_id"    />
+        <result property="createTime"    column="createTime"    />
+        <result property="creator"    column="creator"    />
+    </resultMap>
+	
+	<sql id="selectTTaskLogVo">
+        select task_log_id, member_id, task_id, createTime, creator from t_task_log
+    </sql>
+	
+    <select id="selectTTaskLogList" parameterType="TTaskLog" resultMap="TTaskLogResult">
+        <include refid="selectTTaskLogVo"/>
+        <where>  
+            <if test="taskLogId != null "> and task_log_id = #{taskLogId}</if>
+             <if test="memberId != null "> and member_id = #{memberId}</if>
+             <if test="taskId != null "> and task_id = #{taskId}</if>
+             <if test="createTime != null "> and createTime = #{createTime}</if>
+             <if test="creator != null "> and creator = #{creator}</if>
+         </where>
+    </select>
+    
+    <select id="selectTTaskLogById" parameterType="Long" resultMap="TTaskLogResult">
+        <include refid="selectTTaskLogVo"/>
+        where task_log_id = #{taskLogId}
+    </select>
+        
+    <insert id="insertTTaskLog" parameterType="TTaskLog">
+        insert into t_task_log
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="taskLogId != null  ">task_log_id,</if>
+			<if test="memberId != null  ">member_id,</if>
+			<if test="taskId != null  ">task_id,</if>
+			<if test="createTime != null  ">createTime,</if>
+			<if test="creator != null  ">creator,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="taskLogId != null  ">#{taskLogId},</if>
+			<if test="memberId != null  ">#{memberId},</if>
+			<if test="taskId != null  ">#{taskId},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="creator != null  ">#{creator},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateTTaskLog" parameterType="TTaskLog">
+        update t_task_log
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="memberId != null  ">member_id = #{memberId},</if>
+            <if test="taskId != null  ">task_id = #{taskId},</if>
+            <if test="createTime != null  ">createTime = #{createTime},</if>
+            <if test="creator != null  ">creator = #{creator},</if>
+        </trim>
+        where task_log_id = #{taskLogId}
+    </update>
+
+	<delete id="deleteTTaskLogById" parameterType="Long">
+        delete from t_task_log where task_log_id = #{taskLogId}
+    </delete>
+	
+    <delete id="deleteTTaskLogByIds" parameterType="String">
+        delete from t_task_log where task_log_id in 
+        <foreach item="taskLogId" collection="array" open="(" separator="," close=")">
+            #{taskLogId}
+        </foreach>
+    </delete>
+    
+</mapper>

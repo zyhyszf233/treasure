@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flnet.treasure.mapper.TOrderMapper">
+    
+    <resultMap type="TOrder" id="TOrderResult">
+        <result property="orderId"    column="order_id"    />
+        <result property="createTime"    column="createTime"    />
+        <result property="creator"    column="creator"    />
+        <result property="modifyTime"    column="modifyTime"    />
+        <result property="modifier"    column="modifier"    />
+        <result property="remark"    column="remark"    />
+        <result property="state"    column="state"    />
+        <result property="addressId"    column="address_id"    />
+        <result property="buyerRemark"    column="buyerRemark"    />
+        <result property="code"    column="code"    />
+        <result property="freeFee"    column="freeFee"    />
+        <result property="orderType"    column="order_type"    />
+        <result property="freightFee"    column="freightFee"    />
+        <result property="remindSendRemark"    column="remindSendRemark"    />
+        <result property="goodsId"    column="goods_id"    />
+        <result property="orderNo"    column="orderNo"    />
+        <result property="sendNo"    column="sendNo"    />
+        <result property="memberId"    column="member_id"    />
+    </resultMap>
+	
+	<sql id="selectTOrderVo">
+        select order_id, createTime, creator, modifyTime, modifier, remark, state, address_id, buyerRemark, code, freeFee, order_type, freightFee, remindSendRemark, goods_id, orderNo, sendNo, member_id from t_order
+    </sql>
+	
+    <select id="selectTOrderList" parameterType="TOrder" resultMap="TOrderResult">
+        <include refid="selectTOrderVo"/>
+        <where>  
+            <if test="orderId != null "> and order_id = #{orderId}</if>
+             <if test="createTime != null "> and createTime = #{createTime}</if>
+             <if test="creator != null "> and creator = #{creator}</if>
+             <if test="modifyTime != null "> and modifyTime = #{modifyTime}</if>
+             <if test="modifier != null "> and modifier = #{modifier}</if>
+             <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
+             <if test="state != null  and state != '' "> and state = #{state}</if>
+             <if test="addressId != null "> and address_id = #{addressId}</if>
+             <if test="buyerRemark != null  and buyerRemark != '' "> and buyerRemark = #{buyerRemark}</if>
+             <if test="code != null  and code != '' "> and code = #{code}</if>
+             <if test="freeFee != null "> and freeFee = #{freeFee}</if>
+             <if test="orderType != null  and orderType != '' "> and order_type = #{orderType}</if>
+             <if test="freightFee != null "> and freightFee = #{freightFee}</if>
+             <if test="remindSendRemark != null  and remindSendRemark != '' "> and remindSendRemark = #{remindSendRemark}</if>
+             <if test="goodsId != null "> and goods_id = #{goodsId}</if>
+             <if test="orderNo != null  and orderNo != '' "> and orderNo = #{orderNo}</if>
+             <if test="sendNo != null  and sendNo != '' "> and sendNo = #{sendNo}</if>
+             <if test="memberId != null "> and member_id = #{memberId}</if>
+         </where>
+    </select>
+    
+    <select id="selectTOrderById" parameterType="Long" resultMap="TOrderResult">
+        <include refid="selectTOrderVo"/>
+        where order_id = #{orderId}
+    </select>
+        
+    <insert id="insertTOrder" parameterType="TOrder">
+        insert into t_order
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="orderId != null  ">order_id,</if>
+			<if test="createTime != null  ">createTime,</if>
+			<if test="creator != null  ">creator,</if>
+			<if test="modifyTime != null  ">modifyTime,</if>
+			<if test="modifier != null  ">modifier,</if>
+			<if test="remark != null  and remark != ''  ">remark,</if>
+			<if test="state != null  and state != ''  ">state,</if>
+			<if test="addressId != null  ">address_id,</if>
+			<if test="buyerRemark != null  and buyerRemark != ''  ">buyerRemark,</if>
+			<if test="code != null  and code != ''  ">code,</if>
+			<if test="freeFee != null  ">freeFee,</if>
+			<if test="orderType != null  and orderType != ''  ">order_type,</if>
+			<if test="freightFee != null  ">freightFee,</if>
+			<if test="remindSendRemark != null  and remindSendRemark != ''  ">remindSendRemark,</if>
+			<if test="goodsId != null  ">goods_id,</if>
+			<if test="orderNo != null  and orderNo != ''  ">orderNo,</if>
+			<if test="sendNo != null  and sendNo != ''  ">sendNo,</if>
+			<if test="memberId != null  ">member_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="orderId != null  ">#{orderId},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="creator != null  ">#{creator},</if>
+			<if test="modifyTime != null  ">#{modifyTime},</if>
+			<if test="modifier != null  ">#{modifier},</if>
+			<if test="remark != null  and remark != ''  ">#{remark},</if>
+			<if test="state != null  and state != ''  ">#{state},</if>
+			<if test="addressId != null  ">#{addressId},</if>
+			<if test="buyerRemark != null  and buyerRemark != ''  ">#{buyerRemark},</if>
+			<if test="code != null  and code != ''  ">#{code},</if>
+			<if test="freeFee != null  ">#{freeFee},</if>
+			<if test="orderType != null  and orderType != ''  ">#{orderType},</if>
+			<if test="freightFee != null  ">#{freightFee},</if>
+			<if test="remindSendRemark != null  and remindSendRemark != ''  ">#{remindSendRemark},</if>
+			<if test="goodsId != null  ">#{goodsId},</if>
+			<if test="orderNo != null  and orderNo != ''  ">#{orderNo},</if>
+			<if test="sendNo != null  and sendNo != ''  ">#{sendNo},</if>
+			<if test="memberId != null  ">#{memberId},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateTOrder" parameterType="TOrder">
+        update t_order
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="createTime != null  ">createTime = #{createTime},</if>
+            <if test="creator != null  ">creator = #{creator},</if>
+            <if test="modifyTime != null  ">modifyTime = #{modifyTime},</if>
+            <if test="modifier != null  ">modifier = #{modifier},</if>
+            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+            <if test="state != null  and state != ''  ">state = #{state},</if>
+            <if test="addressId != null  ">address_id = #{addressId},</if>
+            <if test="buyerRemark != null  and buyerRemark != ''  ">buyerRemark = #{buyerRemark},</if>
+            <if test="code != null  and code != ''  ">code = #{code},</if>
+            <if test="freeFee != null  ">freeFee = #{freeFee},</if>
+            <if test="orderType != null  and orderType != ''  ">order_type = #{orderType},</if>
+            <if test="freightFee != null  ">freightFee = #{freightFee},</if>
+            <if test="remindSendRemark != null  and remindSendRemark != ''  ">remindSendRemark = #{remindSendRemark},</if>
+            <if test="goodsId != null  ">goods_id = #{goodsId},</if>
+            <if test="orderNo != null  and orderNo != ''  ">orderNo = #{orderNo},</if>
+            <if test="sendNo != null  and sendNo != ''  ">sendNo = #{sendNo},</if>
+            <if test="memberId != null  ">member_id = #{memberId},</if>
+        </trim>
+        where order_id = #{orderId}
+    </update>
+
+	<delete id="deleteTOrderById" parameterType="Long">
+        delete from t_order where order_id = #{orderId}
+    </delete>
+	
+    <delete id="deleteTOrderByIds" parameterType="String">
+        delete from t_order where order_id in 
+        <foreach item="orderId" collection="array" open="(" separator="," close=")">
+            #{orderId}
+        </foreach>
+    </delete>
+    
+</mapper>

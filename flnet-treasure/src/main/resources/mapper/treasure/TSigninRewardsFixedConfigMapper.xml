@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flnet.treasure.mapper.TSigninRewardsFixedConfigMapper">
+    
+    <resultMap type="TSigninRewardsFixedConfig" id="TSigninRewardsFixedConfigResult">
+        <result property="tSigninRewardsFixedConfigId"    column="t_signin_rewards_fixed_config_id"    />
+        <result property="createTime"    column="createTime"    />
+        <result property="creator"    column="creator"    />
+        <result property="modifyTime"    column="modifyTime"    />
+        <result property="modifier"    column="modifier"    />
+        <result property="remark"    column="remark"    />
+        <result property="rewardsQuantity"    column="rewardsQuantity"    />
+        <result property="continuesQuantity"    column="continuesQuantity"    />
+        <result property="rewardsType"    column="rewardsType"    />
+        <result property="status"    column="status"    />
+    </resultMap>
+	
+	<sql id="selectTSigninRewardsFixedConfigVo">
+        select t_signin_rewards_fixed_config_id, createTime, creator, modifyTime, modifier, remark, rewardsQuantity, continuesQuantity, rewardsType, status from t_signin_rewards_fixed_config
+    </sql>
+	
+    <select id="selectTSigninRewardsFixedConfigList" parameterType="TSigninRewardsFixedConfig" resultMap="TSigninRewardsFixedConfigResult">
+        <include refid="selectTSigninRewardsFixedConfigVo"/>
+        <where>  
+            <if test="tSigninRewardsFixedConfigId != null "> and t_signin_rewards_fixed_config_id = #{tSigninRewardsFixedConfigId}</if>
+             <if test="createTime != null "> and createTime = #{createTime}</if>
+             <if test="creator != null "> and creator = #{creator}</if>
+             <if test="modifyTime != null "> and modifyTime = #{modifyTime}</if>
+             <if test="modifier != null "> and modifier = #{modifier}</if>
+             <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
+             <if test="rewardsQuantity != null "> and rewardsQuantity = #{rewardsQuantity}</if>
+             <if test="continuesQuantity != null "> and continuesQuantity = #{continuesQuantity}</if>
+             <if test="rewardsType != null "> and rewardsType = #{rewardsType}</if>
+             <if test="status != null  and status != '' "> and status = #{status}</if>
+         </where>
+    </select>
+    
+    <select id="selectTSigninRewardsFixedConfigById" parameterType="Long" resultMap="TSigninRewardsFixedConfigResult">
+        <include refid="selectTSigninRewardsFixedConfigVo"/>
+        where t_signin_rewards_fixed_config_id = #{tSigninRewardsFixedConfigId}
+    </select>
+        
+    <insert id="insertTSigninRewardsFixedConfig" parameterType="TSigninRewardsFixedConfig">
+        insert into t_signin_rewards_fixed_config
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="tSigninRewardsFixedConfigId != null  ">t_signin_rewards_fixed_config_id,</if>
+			<if test="createTime != null  ">createTime,</if>
+			<if test="creator != null  ">creator,</if>
+			<if test="modifyTime != null  ">modifyTime,</if>
+			<if test="modifier != null  ">modifier,</if>
+			<if test="remark != null  and remark != ''  ">remark,</if>
+			<if test="rewardsQuantity != null  ">rewardsQuantity,</if>
+			<if test="continuesQuantity != null  ">continuesQuantity,</if>
+			<if test="rewardsType != null  ">rewardsType,</if>
+			<if test="status != null  and status != ''  ">status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="tSigninRewardsFixedConfigId != null  ">#{tSigninRewardsFixedConfigId},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="creator != null  ">#{creator},</if>
+			<if test="modifyTime != null  ">#{modifyTime},</if>
+			<if test="modifier != null  ">#{modifier},</if>
+			<if test="remark != null  and remark != ''  ">#{remark},</if>
+			<if test="rewardsQuantity != null  ">#{rewardsQuantity},</if>
+			<if test="continuesQuantity != null  ">#{continuesQuantity},</if>
+			<if test="rewardsType != null  ">#{rewardsType},</if>
+			<if test="status != null  and status != ''  ">#{status},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateTSigninRewardsFixedConfig" parameterType="TSigninRewardsFixedConfig">
+        update t_signin_rewards_fixed_config
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="createTime != null  ">createTime = #{createTime},</if>
+            <if test="creator != null  ">creator = #{creator},</if>
+            <if test="modifyTime != null  ">modifyTime = #{modifyTime},</if>
+            <if test="modifier != null  ">modifier = #{modifier},</if>
+            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+            <if test="rewardsQuantity != null  ">rewardsQuantity = #{rewardsQuantity},</if>
+            <if test="continuesQuantity != null  ">continuesQuantity = #{continuesQuantity},</if>
+            <if test="rewardsType != null  ">rewardsType = #{rewardsType},</if>
+            <if test="status != null  and status != ''  ">status = #{status},</if>
+        </trim>
+        where t_signin_rewards_fixed_config_id = #{tSigninRewardsFixedConfigId}
+    </update>
+
+	<delete id="deleteTSigninRewardsFixedConfigById" parameterType="Long">
+        delete from t_signin_rewards_fixed_config where t_signin_rewards_fixed_config_id = #{tSigninRewardsFixedConfigId}
+    </delete>
+	
+    <delete id="deleteTSigninRewardsFixedConfigByIds" parameterType="String">
+        delete from t_signin_rewards_fixed_config where t_signin_rewards_fixed_config_id in 
+        <foreach item="tSigninRewardsFixedConfigId" collection="array" open="(" separator="," close=")">
+            #{tSigninRewardsFixedConfigId}
+        </foreach>
+    </delete>
+    
+</mapper>

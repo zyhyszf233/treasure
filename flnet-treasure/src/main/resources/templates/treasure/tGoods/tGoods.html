@@ -1,0 +1,233 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+    
+     <div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li>
+								商品名称：<input type="text" name="name"/>
+							</li>
+
+							<li>
+								商品描述：<input type="text" name="title"/>
+							</li>
+
+							<li>
+								：<input type="text" name="goodsCode"/>
+							</li>
+
+							<li>
+								图片：<input type="text" name="iconPath"/>
+							</li>
+
+							<li>
+								市价：<input type="text" name="price"/>
+							</li>
+
+							<li>
+								兑换价：<input type="text" name="exchangePrice"/>
+							</li>
+
+							<li>
+								积分：<input type="text" name="coin"/>
+							</li>
+
+							<li>
+								限购：<input type="text" name="limitateBuy"/>
+							</li>
+
+							<li>
+								库存：<input type="text" name="stock"/>
+							</li>
+
+							<li>
+								已售：<input type="text" name="sold"/>
+							</li>
+
+							<li>
+								帐号状态（0正常 1停用）：<input type="text" name="status"/>
+							</li>
+
+							<li>
+								：<input type="text" name="createTime"/>
+							</li>
+
+							<li>
+								：<input type="text" name="creator"/>
+							</li>
+
+							<li>
+								：<input type="text" name="modifyTime"/>
+							</li>
+
+							<li>
+								：<input type="text" name="modifier"/>
+							</li>
+
+							<li>
+								类型：<input type="text" name="categoryId"/>
+							</li>
+
+							<li>
+								：<input type="text" name="remark"/>
+							</li>
+
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			
+	        <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="treasure:tGoods:add">
+					<i class="fa fa-plus"></i> 添加
+				</a>
+				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="treasure:tGoods:edit">
+					<i class="fa fa-edit"></i> 修改
+				</a>
+				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="treasure:tGoods:remove">
+					<i class="fa fa-remove"></i> 删除
+				</a>
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="treasure:tGoods:export">
+						<i class="fa fa-download"></i> 导出
+				 </a>
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table" data-mobile-responsive="true"></table>
+			</div>
+		</div>
+	</div>
+    <div th:include="include :: footer"></div>
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('treasure:tGoods:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('treasure:tGoods:remove')}]];
+        var prefix = ctx + "treasure/tGoods";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+				exportUrl: prefix + "/export",
+                modalName: "商品管理",
+				search: false,
+		        showExport: true,
+                columns: [{
+		            checkbox: true
+		        },
+				{
+					field : 'goodsId', 
+					title : '',
+					visible: false
+				},
+				{
+					field : 'name', 
+					title : '商品名称',
+					sortable: true
+				},
+				{
+					field : 'title', 
+					title : '商品描述',
+					sortable: true
+				},
+				{
+					field : 'goodsCode', 
+					title : '',
+					sortable: true
+				},
+				{
+					field : 'iconPath', 
+					title : '图片',
+					sortable: true
+				},
+				{
+					field : 'price', 
+					title : '市价',
+					sortable: true
+				},
+				{
+					field : 'exchangePrice', 
+					title : '兑换价',
+					sortable: true
+				},
+				{
+					field : 'coin', 
+					title : '积分',
+					sortable: true
+				},
+				{
+					field : 'limitateBuy', 
+					title : '限购',
+					sortable: true
+				},
+				{
+					field : 'stock', 
+					title : '库存',
+					sortable: true
+				},
+				{
+					field : 'sold', 
+					title : '已售',
+					sortable: true
+				},
+				{
+					field : 'status', 
+					title : '帐号状态（0正常 1停用）',
+					sortable: true
+				},
+				{
+					field : 'createTime', 
+					title : '',
+					sortable: true
+				},
+				{
+					field : 'creator', 
+					title : '',
+					sortable: true
+				},
+				{
+					field : 'modifyTime', 
+					title : '',
+					sortable: true
+				},
+				{
+					field : 'modifier', 
+					title : '',
+					sortable: true
+				},
+				{
+					field : 'categoryId', 
+					title : '类型',
+					sortable: true
+				},
+				{
+					field : 'remark', 
+					title : '',
+					sortable: true
+				},
+		        {
+		            title: '操作',
+		            align: 'center',
+		            formatter: function(value, row, index) {
+		            	var actions = [];
+		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.goodsId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.goodsId + '\')"><i class="fa fa-remove"></i>删除</a>');
+						return actions.join('');
+		            }
+		        }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

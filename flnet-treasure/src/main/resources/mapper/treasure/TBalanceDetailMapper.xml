@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flnet.treasure.mapper.TBalanceDetailMapper">
+    
+    <resultMap type="TBalanceDetail" id="TBalanceDetailResult">
+        <result property="balanceDetailId"    column="balance_detail_id"    />
+        <result property="createTime"    column="createTime"    />
+        <result property="creator"    column="creator"    />
+        <result property="modifyTime"    column="modifyTime"    />
+        <result property="modifier"    column="modifier"    />
+        <result property="remark"    column="remark"    />
+        <result property="tradeAmount"    column="tradeAmount"    />
+        <result property="remainder"    column="remainder"    />
+        <result property="type"    column="type"    />
+        <result property="memberId"    column="member_id"    />
+    </resultMap>
+	
+	<sql id="selectTBalanceDetailVo">
+        select balance_detail_id, createTime, creator, modifyTime, modifier, remark, tradeAmount, remainder, type, member_id from t_balance_detail
+    </sql>
+	
+    <select id="selectTBalanceDetailList" parameterType="TBalanceDetail" resultMap="TBalanceDetailResult">
+        <include refid="selectTBalanceDetailVo"/>
+        <where>  
+            <if test="balanceDetailId != null "> and balance_detail_id = #{balanceDetailId}</if>
+             <if test="createTime != null "> and createTime = #{createTime}</if>
+             <if test="creator != null "> and creator = #{creator}</if>
+             <if test="modifyTime != null "> and modifyTime = #{modifyTime}</if>
+             <if test="modifier != null "> and modifier = #{modifier}</if>
+             <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
+             <if test="tradeAmount != null "> and tradeAmount = #{tradeAmount}</if>
+             <if test="remainder != null "> and remainder = #{remainder}</if>
+             <if test="type != null  and type != '' "> and type = #{type}</if>
+             <if test="memberId != null "> and member_id = #{memberId}</if>
+         </where>
+    </select>
+    
+    <select id="selectTBalanceDetailById" parameterType="Long" resultMap="TBalanceDetailResult">
+        <include refid="selectTBalanceDetailVo"/>
+        where balance_detail_id = #{balanceDetailId}
+    </select>
+        
+    <insert id="insertTBalanceDetail" parameterType="TBalanceDetail">
+        insert into t_balance_detail
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="balanceDetailId != null  ">balance_detail_id,</if>
+			<if test="createTime != null  ">createTime,</if>
+			<if test="creator != null  ">creator,</if>
+			<if test="modifyTime != null  ">modifyTime,</if>
+			<if test="modifier != null  ">modifier,</if>
+			<if test="remark != null  and remark != ''  ">remark,</if>
+			<if test="tradeAmount != null  ">tradeAmount,</if>
+			<if test="remainder != null  ">remainder,</if>
+			<if test="type != null  and type != ''  ">type,</if>
+			<if test="memberId != null  ">member_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="balanceDetailId != null  ">#{balanceDetailId},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="creator != null  ">#{creator},</if>
+			<if test="modifyTime != null  ">#{modifyTime},</if>
+			<if test="modifier != null  ">#{modifier},</if>
+			<if test="remark != null  and remark != ''  ">#{remark},</if>
+			<if test="tradeAmount != null  ">#{tradeAmount},</if>
+			<if test="remainder != null  ">#{remainder},</if>
+			<if test="type != null  and type != ''  ">#{type},</if>
+			<if test="memberId != null  ">#{memberId},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateTBalanceDetail" parameterType="TBalanceDetail">
+        update t_balance_detail
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="createTime != null  ">createTime = #{createTime},</if>
+            <if test="creator != null  ">creator = #{creator},</if>
+            <if test="modifyTime != null  ">modifyTime = #{modifyTime},</if>
+            <if test="modifier != null  ">modifier = #{modifier},</if>
+            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+            <if test="tradeAmount != null  ">tradeAmount = #{tradeAmount},</if>
+            <if test="remainder != null  ">remainder = #{remainder},</if>
+            <if test="type != null  and type != ''  ">type = #{type},</if>
+            <if test="memberId != null  ">member_id = #{memberId},</if>
+        </trim>
+        where balance_detail_id = #{balanceDetailId}
+    </update>
+
+	<delete id="deleteTBalanceDetailById" parameterType="Long">
+        delete from t_balance_detail where balance_detail_id = #{balanceDetailId}
+    </delete>
+	
+    <delete id="deleteTBalanceDetailByIds" parameterType="String">
+        delete from t_balance_detail where balance_detail_id in 
+        <foreach item="balanceDetailId" collection="array" open="(" separator="," close=")">
+            #{balanceDetailId}
+        </foreach>
+    </delete>
+    
+</mapper>

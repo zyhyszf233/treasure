@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flnet.treasure.mapper.TContentMapper">
+    
+    <resultMap type="TContent" id="TContentResult">
+        <result property="contentId"    column="content_id"    />
+        <result property="content"    column="content"    />
+        <result property="title"    column="title"    />
+        <result property="createTime"    column="createTime"    />
+        <result property="creator"    column="creator"    />
+        <result property="modifyTime"    column="modifyTime"    />
+        <result property="modifier"    column="modifier"    />
+        <result property="type"    column="type"    />
+    </resultMap>
+	
+	<sql id="selectTContentVo">
+        select content_id, content, title, createTime, creator, modifyTime, modifier, type from t_content
+    </sql>
+	
+    <select id="selectTContentList" parameterType="TContent" resultMap="TContentResult">
+        <include refid="selectTContentVo"/>
+        <where>  
+            <if test="contentId != null "> and content_id = #{contentId}</if>
+             <if test="content != null  and content != '' "> and content = #{content}</if>
+             <if test="title != null  and title != '' "> and title = #{title}</if>
+             <if test="createTime != null "> and createTime = #{createTime}</if>
+             <if test="creator != null "> and creator = #{creator}</if>
+             <if test="modifyTime != null "> and modifyTime = #{modifyTime}</if>
+             <if test="modifier != null "> and modifier = #{modifier}</if>
+             <if test="type != null "> and type = #{type}</if>
+         </where>
+    </select>
+    
+    <select id="selectTContentById" parameterType="Long" resultMap="TContentResult">
+        <include refid="selectTContentVo"/>
+        where content_id = #{contentId}
+    </select>
+        
+    <insert id="insertTContent" parameterType="TContent">
+        insert into t_content
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="contentId != null  ">content_id,</if>
+			<if test="content != null  and content != ''  ">content,</if>
+			<if test="title != null  and title != ''  ">title,</if>
+			<if test="createTime != null  ">createTime,</if>
+			<if test="creator != null  ">creator,</if>
+			<if test="modifyTime != null  ">modifyTime,</if>
+			<if test="modifier != null  ">modifier,</if>
+			<if test="type != null  ">type,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="contentId != null  ">#{contentId},</if>
+			<if test="content != null  and content != ''  ">#{content},</if>
+			<if test="title != null  and title != ''  ">#{title},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="creator != null  ">#{creator},</if>
+			<if test="modifyTime != null  ">#{modifyTime},</if>
+			<if test="modifier != null  ">#{modifier},</if>
+			<if test="type != null  ">#{type},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateTContent" parameterType="TContent">
+        update t_content
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="content != null  and content != ''  ">content = #{content},</if>
+            <if test="title != null  and title != ''  ">title = #{title},</if>
+            <if test="createTime != null  ">createTime = #{createTime},</if>
+            <if test="creator != null  ">creator = #{creator},</if>
+            <if test="modifyTime != null  ">modifyTime = #{modifyTime},</if>
+            <if test="modifier != null  ">modifier = #{modifier},</if>
+            <if test="type != null  ">type = #{type},</if>
+        </trim>
+        where content_id = #{contentId}
+    </update>
+
+	<delete id="deleteTContentById" parameterType="Long">
+        delete from t_content where content_id = #{contentId}
+    </delete>
+	
+    <delete id="deleteTContentByIds" parameterType="String">
+        delete from t_content where content_id in 
+        <foreach item="contentId" collection="array" open="(" separator="," close=")">
+            #{contentId}
+        </foreach>
+    </delete>
+    
+</mapper>
